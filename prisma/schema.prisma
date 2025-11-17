@@ -8,9 +8,10 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  questions Question[]
 
   @@map("users")
 }
@@ -20,8 +21,10 @@ model Question {
   title     String
   content   String
   createdAt DateTime @default(now()) @map("created_at")
-  updateAt  DateTime @updatedAt @map("updated_at")
-  userId    String   @map("user_id")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
 
   @@map("questions")
 }
